@@ -1,9 +1,13 @@
-from choices import CHOICE
+from enum import Enum
+
+from src.choices import CHOICE
 from typing import TypedDict
+
 
 class ChoiceLogicEntry(TypedDict):
     beats: CHOICE
     beaten_by: CHOICE
+
 
 CHOICE_LOGIC: dict[CHOICE, ChoiceLogicEntry] = {
     CHOICE.ROCK: {
@@ -21,13 +25,24 @@ CHOICE_LOGIC: dict[CHOICE, ChoiceLogicEntry] = {
 }
 
 
-def get_outcome(human_choice: CHOICE, computer_choice: CHOICE) -> str:
+class OUTCOME(Enum):
+    HUMAN_WIN = 'Human wins!'
+    COMPUTER_WIN = 'Computer wins!'
+    DRAW = 'Draw!'
+
+
+def get_outcome(human_choice: CHOICE, computer_choice: CHOICE) -> OUTCOME:
+    try:
+        human_choice_logic_entry = CHOICE_LOGIC[human_choice]
+    except KeyError:
+        raise RuntimeError(f'Game logic error: human_choice={human_choice} not in CHOICE_LOGIC')
+
     if human_choice == computer_choice:
-        return "Draw!"
-    elif CHOICE_LOGIC[human_choice]['beats'] == computer_choice:
-        return "Human wins!"
-    elif CHOICE_LOGIC[human_choice]['beaten_by'] == computer_choice:
-        return "Computer wins!"
+        return OUTCOME.DRAW
+    elif human_choice_logic_entry['beats'] == computer_choice:
+        return OUTCOME.HUMAN_WIN
+    elif human_choice_logic_entry['beaten_by'] == computer_choice:
+        return OUTCOME.COMPUTER_WIN
     else:
-        raise RuntimeError("Game logic error")
+        raise RuntimeError(f"Game logic error: human_choice={human_choice}, computer_choice={computer_choice}")
 

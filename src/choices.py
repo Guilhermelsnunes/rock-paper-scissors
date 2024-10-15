@@ -3,15 +3,17 @@ from enum import Enum
 
 
 class CHOICE(str, Enum):
-    ROCK='Rock'
-    PAPER='Paper'
-    SCISSORS='Scissors'
+    ROCK = 'Rock'
+    PAPER = 'Paper'
+    SCISSORS = 'Scissors'
+
 
 NUMBERED_CHOICES = {
     1: CHOICE.ROCK,
     2: CHOICE.PAPER,
     3: CHOICE.SCISSORS
 }
+
 
 def get_computer_choice() -> CHOICE:
     return random.choice(list(CHOICE))

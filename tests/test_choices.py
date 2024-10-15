@@ -19,7 +19,7 @@ def test_get_computer_choice():
         (3, CHOICE.SCISSORS)
     ]
 )
-def test_get_human_choice(monkeypatch, choice_number, choice):
+def test_get_human_choice(monkeypatch, choice_number: int, choice: CHOICE):
     monkeypatch.setattr('builtins.input', lambda _: choice_number)
     assert get_human_choice() == choice
 
@@ -43,7 +43,7 @@ def test_get_human_choice__invalid_raises(monkeypatch):
         (CHOICE.SCISSORS, CHOICE.SCISSORS, 'You chose Scissors\nThe computer chose Scissors\n')
     ]
 )
-def test_print_choices(capsys, human_choice, computer_choice, stdout):
+def test_print_choices(capsys, human_choice: CHOICE, computer_choice: CHOICE, stdout: str):
     print_choices(human_choice=human_choice, computer_choice=computer_choice)
     assert capsys.readouterr().out == stdout
 
