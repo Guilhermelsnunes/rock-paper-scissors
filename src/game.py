@@ -12,4 +12,4 @@ if __name__ == '__main__':
     print("The computer has chosen!")
     human_choice = get_human_choice()
     print_choices(human_choice=human_choice, computer_choice=computer_choice)
-    print(get_outcome(human_choice=human_choice, computer_choice=computer_choice))
+    print(get_outcome(human_choice=human_choice, computer_choice=computer_choice).value)
